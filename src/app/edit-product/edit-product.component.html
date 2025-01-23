@@ -1,0 +1,31 @@
+<div class="card flex justify-center my-3">
+
+    <button class="btn btn-primary"  (click)="showDialog()" >Edit</button>
+    <p-dialog header="Update Products Here !!!" [modal]="true" [(visible)]="visible" [style]="{ width: '35rem' }">
+       
+        <form [formGroup]="addProductForm" class="shadow p-4 ">
+            <div class="d-flex flex-column justify-content-center align-items-center">
+                <img [src]="productDetails.image" width="100px"  alt="">
+            <input placeholder="Product Name" [value]="productDetails.name" [(ngModel)]="productDetails.name" name="name" formControlName="name"  type="text" class="form-control mt-3" id="exampleInputname" aria-describedby="nameHelp">
+            @if (addProductForm.get('name')?.errors && addProductForm.get('name')?.touched ) {
+                <div class="text-danger fw-bolder">*Invalid Product Name</div>
+            }
+            <input placeholder="Product Image_Url" [value]="productDetails.image" [(ngModel)]="productDetails.image"  name="image" formControlName="image"  type="text" class="form-control mt-5" id="exampleInputImage" aria-describedby="imageHelp">
+            @if (addProductForm.get('image')?.errors && addProductForm.get('image')?.touched ) {
+                <div class="text-danger fw-bolder">*Invalid Product Url</div>
+            }
+            <input placeholder="Product Category" [value]="productDetails.category" [(ngModel)]="productDetails.category"  name="category" formControlName="category"  type="text" class="form-control mt-5" id="exampleInputcategory" aria-describedby="categoryHelp">
+            @if (addProductForm.get('category')?.errors && addProductForm.get('category')?.touched ) {
+                <div class="text-danger fw-bolder">*Invalid Product category</div>
+            }
+            <input placeholder="Product Price" [value]="productDetails.price" [(ngModel)]="productDetails.price" name="price" formControlName="price"  type="text" class="form-control mt-5" id="exampleInputPrice" aria-describedby="priceHelp">
+            @if (addProductForm.get('price')?.errors && addProductForm.get('price')?.touched ) {
+                <div class="text-danger fw-bolder">*Invalid Product Price</div>
+            } 
+                <button (click)="hideDialog()" class="btn btn-primary my-3">Update Product</button>
+    
+    
+            </div>
+        </form>
+    </p-dialog>
+</div>

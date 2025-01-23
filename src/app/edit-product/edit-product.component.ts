@@ -1,23 +1,22 @@
-import { Component, EventEmitter, Input, Output, output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
 import { Dialog, DialogModule } from 'primeng/dialog';
 import { InputTextModule } from 'primeng/inputtext';
 
 @Component({
-  selector: 'app-add-button',
+  selector: 'app-edit-product',
   standalone: true,
   imports: [Dialog, ButtonModule, InputTextModule, ReactiveFormsModule],
-  templateUrl: './add-button.component.html',
-  styleUrl: './add-button.component.css'
+  templateUrl: './edit-product.component.html',
+  styleUrl: './edit-product.component.css'
 })
-export class AddButtonComponent {
+export class EditProductComponent {
+
   visible: boolean = false;
   addProductForm: FormGroup
-  productDetails: any = {}
-  @Output() newProduct = new EventEmitter<any>()
-  
-
+  @Output() UpdatedProduct = new EventEmitter<any>()
+  @Input()  productDetails:any = {}
 
 
   constructor(private fb: FormBuilder) {
@@ -29,24 +28,15 @@ export class AddButtonComponent {
     })
   }
 
-
   showDialog() {
     this.visible = true;
-    this.addProductForm.reset()
-    this.productDetails.image=""
   }
-  addImage(){
-    this.productDetails.image = this.addProductForm.value.image
-  }
+  
 
   hideDialog() {
     if (this.addProductForm.valid) {
-      this.productDetails.name = this.addProductForm.value.name
-      this.productDetails.image = this.addProductForm.value.image
-      this.productDetails.category = this.addProductForm.value.category
-      this.productDetails.price = this.addProductForm.value.price
       // console.log(this.productDetails);
-      this.newProduct.emit(this.productDetails)
+      this.UpdatedProduct.emit(this.productDetails)
       this.visible = false;
     } else {
       alert("Invalid Form")

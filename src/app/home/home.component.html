@@ -2,8 +2,8 @@
     <h1 class="text-center fw-bolder">
         Product Details
     </h1>
-    <app-add-button></app-add-button>
-    <div class="card shadow p-3 ">
+    <app-add-button (newProduct)="newProductDetails($event)"></app-add-button>
+    <div class="card shadow p-3 w-100">
         <div class="d-flex justify-content-center align-items-center">
             <app-sort [products]="products"></app-sort>
             <app-search (dataSent)="receiveData($event)"></app-search>
@@ -27,8 +27,11 @@
                     <td><img [src]="product.image" alt="" width="100px" class="rounded"></td>
                     <td>{{product.category}}</td>
                     <td>{{product.price}}</td>
-                    <button routerLink="manageProducts/{{product.id}}" class="btn btn-primary mt-4">Edit</button>
-                    <button (click)="deleteProduct(product.id)" class="btn btn-danger mt-4 ms-2">Delete</button>
+                    <td class="d-flex">
+                        <app-edit-product [productDetails]="product"
+                            (UpdatedProduct)="editProductDetails($event)"></app-edit-product>
+                        <button (click)="deleteProduct(product.id)" class="btn btn-danger ms-2 mt-3 p-2" style="height: 40px;">Delete</button>
+                    </td>
                 </tr>
             </ng-template>
         </p-table>

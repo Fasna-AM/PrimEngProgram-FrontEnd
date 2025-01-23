@@ -1,18 +1,17 @@
 import { Component } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { RouterLink } from '@angular/router';
 import { TableModule } from 'primeng/table';
 import { ApiService } from '../services/api.service';
 import { AddButtonComponent } from '../add-button/add-button.component';
 import { SortComponent } from '../sort/sort.component';
 import { SearchComponent } from '../search/search.component';
-// import { AddEmployeeComponent } from '../add-employee/add-employee.component';
+import { EditProductComponent } from "../edit-product/edit-product.component";
 
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [TableModule,RouterLink,FormsModule,AddButtonComponent,SortComponent,SearchComponent],
+  imports: [TableModule,FormsModule, AddButtonComponent, SortComponent, SearchComponent, EditProductComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
@@ -20,6 +19,9 @@ export class HomeComponent {
   products:any =[]
   dummyProducts:any=[]
   receivedData: any=[]
+  newProduct:any={}
+  UpdatedProductdetails:any={}
+
   constructor(private api:ApiService){}
 
   ngOnInit(){
@@ -40,6 +42,21 @@ export class HomeComponent {
   }
   receiveData(data: any) {
     this.products = data;  // Receive data from child
+  }
+  newProductDetails(data:any){
+    this.newProduct=data
+    // console.log(this.newProduct);
+    this.api.addProductAPI(this.newProduct).subscribe((res:any)=>{
+      alert("Products added successfully!!!")
+      this.getAllProducts()
+    })
+  }
+  editProductDetails(data:any){
+    this.UpdatedProductdetails=data
+    this.api.updateProductAPI(this.UpdatedProductdetails.id,this.UpdatedProductdetails).subscribe((res:any)=>{
+      // console.log(res);
+      alert("Product Details updated Successfully!!!")
+    })
   }
 
 }
